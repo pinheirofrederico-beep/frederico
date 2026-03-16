@@ -28,37 +28,14 @@ form.addEventListener('submit', function(event) {
     
     // Opcional: Mostra no console para você ver o "banco de dados"
     console.log("Lista Atualizada:", listaUsuarios);
+{
+    
 });
 
 
+// Salvando
+localStorage.setItem('cadastro_cliente', JSON.stringify(cliente));
 
-
-{
-  "cliente_id": 1025,
-  "data_cadastro": "2026-03-16",
-  "ativo": true,
-  "perfil": {
-    "nome_completo": "Ana Silva Santos",
-    "cpf": "123.456.789-00",
-    "data_nascimento": "1992-05-20",
-    "contatos": {
-      "email": "ana.silva@email.com",
-      "telefone": "+55 11 98888-7777"
-    }
-  },
-  "endereco": {
-    "logradouro": "Rua das Flores",
-    "numero": "123",
-    "complemento": "Apto 42",
-    "bairro": "Jardim Paulista",
-    "cidade": "São Paulo",
-    "estado": "SP",
-    "cep": "01234-567"
-  },
-  "preferencias": [
-    "notificacoes_email",
-    "newsletter",
-    "modo_escuro"
-  ]
-}
-
+// Lendo depois
+const salvo = JSON.parse(localStorage.getItem('cadastro_cliente'));
+console.log(salvo.nome); // "Ana Silva Santos"
