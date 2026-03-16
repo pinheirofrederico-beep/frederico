@@ -61,3 +61,36 @@ form.addEventListener('submit', function(event) {
     "modo_escuro"
   ]
 }
+
+
+import json
+
+# 1. Representação dos dados (em formato de string/texto)
+dados_cliente_json = '''
+{
+  "cliente_id": 1025,
+  "perfil": {
+    "nome_completo": "Ana Silva Santos",
+    "contatos": {
+      "email": "ana.silva@email.com"
+    }
+  },
+  "ativo": true
+}
+'''
+
+# 2. Convertendo a string JSON para um Dicionário Python
+dados = json.loads(dados_cliente_json)
+
+# Agora podemos acessar os dados como se fosse uma pasta organizada
+nome = dados["perfil"]["nome_completo"]
+email = dados["perfil"]["contatos"]["email"]
+
+print(f"Processando cadastro de: {nome}")
+print(f"E-mail de contato: {email}")
+
+# 3. Salvando as informações em um arquivo físico (.json)
+with open('cadastro_cliente.json', 'w', encoding='utf-8') as arquivo:
+    json.dump(dados, arquivo, indent=4, ensure_ascii=False)
+
+print("\nArquivo 'cadastro_cliente.json' criado com sucesso!")
