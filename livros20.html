@@ -2,61 +2,158 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Livraria Digital - Livros 2.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vida Saudável & Equilíbrio</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; color: #333; line-height: 1.6; padding: 20px; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #28a745; padding-bottom: 10px; }
-        .welcome-msg { font-size: 1.2em; color: #28a745; font-weight: bold; margin-bottom: 20px; }
-        .book-list { list-style: none; padding: 0; }
-        .book-item { background: #fff; border: 1px solid #ddd; margin-bottom: 10px; padding: 15px; border-radius: 5px; transition: transform 0.2s; }
-        .book-item:hover { transform: scale(1.02); border-color: #28a745; }
-        .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; float: right; }
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --accent-color: #e67e22;
+            --text-dark: #2c3e50;
+            --light-bg: #f4f7f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #ddd;
+            margin-top: 3rem;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <button class="logout-btn" onclick="sair()">Sair</button>
-        <h1>Catálogo de Livros 2.0</h1>
-        
-        <p class="welcome-msg" id="mensagemBoasVindas">Carregando...</p>
+<header>
+    <h1>Jornada Vida Saudável</h1>
+    <p>Pequenas mudanças, grandes resultados para o seu bem-estar.</p>
+</header>
 
-        <h3>Destaques da Semana:</h3>
-        <ul class="book-list">
-            <li class="book-item"><strong>O Alquimista</strong> - Paulo Coelho</li>
-            <li class="book-item"><strong>Dom Casmurro</strong> - Machado de Assis</li>
-            <li class="book-item"><strong>1984</strong> - George Orwell</li>
-            <li class="book-item"><strong>O Pequeno Príncipe</strong> - Antoine de Saint-Exupéry</li>
-        </ul>
+<div class="container">
+    <div class="disclaimer">
+        <strong>Atenção:</strong> Consulte sempre um médico ou nutricionista antes de iniciar qualquer dieta ou rotina de exercícios intensos.
     </div>
 
-    <script>
-        // 1. Função para recuperar os dados do JSON salvo
-        function carregarUsuario() {
-            const dadosSalvos = localStorage.getItem('clienteLogado');
+    <section>
+        <h2>Fundamentos do Emagrecimento</h2>
+        <p>O emagrecimento real não vem de dietas restritivas, mas sim do <strong>déficit calórico</strong> aliado à densidade nutricional. Ou seja: gastar mais energia do que se consome, mas garantindo que o corpo receba vitaminas e minerais.</p>
+    </section>
 
-            if (dadosSalvos) {
-                // Transforma a string JSON de volta em objeto
-                const usuario = JSON.parse(dadosSalvos);
-                
-                // Exibe o nome na tela
-                document.getElementById('mensagemBoasVindas').innerText = `Olá, ${usuario.nome}! Bem-vinda à sua estante virtual.`;
-            } else {
-                // Se não houver dados, volta para o cadastro
-                alert("Por favor, faça o cadastro primeiro.");
-                window.location.href = "cadastro.html"; // Ajuste o nome para o seu arquivo de cadastro
-            }
-        }
+    <div class="grid">
+        <article class="card">
+            <h2>Alimentação Inteligente</h2>
+            <ul>
+                <li><strong>Priorize Comida de Verdade:</strong> Descasque mais e desembale menos.</li>
+                <li><strong>Proteínas em todas as refeições:</strong> Ajuda na saciedade e manutenção muscular.</li>
+                <li><strong>Fibras são essenciais:</strong> Vegetais verdes e grãos integrais melhoram a digestão.</li>
+                <li><strong>Hidratação:</strong> Beba pelo menos 35ml de água por quilo de peso corporal.</li>
+            </ul>
+        </article>
 
-        function sair() {
-            localStorage.removeItem('clienteLogado'); // Limpa os dados
-            window.location.href = "cadastro.html"; // Volta ao início
-        }
+        <article class="card">
+            <h2>Movimento Eficaz</h2>
+            <ul>
+                <li><strong>Musculação:</strong> Essencial para acelerar o metabolismo basal.</li>
+                <li><strong>Cardio Moderado:</strong> Caminhadas rápidas são excelentes para queima de gordura.</li>
+                <li><strong>HIIT:</strong> Treinos curtos e intensos para quem tem pouco tempo.</li>
+                <li><strong>Constância:</strong> É melhor treinar 20 min todo dia do que 2 horas uma vez por semana.</li>
+            </ul>
+        </article>
 
-        // Executa assim que a página abre
-        carregarUsuario();
-    </script>
+        <article class="card">
+            <h2>Hábitos Diários</h2>
+            <ul>
+                <li><strong>Higiene do Sono:</strong> Dormir 7-8h regula os hormônios da fome (grelina e leptina).</li>
+                <li><strong>Gerenciamento de Estresse:</strong> O cortisol alto dificulta a perda de gordura abdominal.</li>
+                <li><strong>Comer sem distrações:</strong> Pratique o <em>Mindful Eating</em> (comer com atenção plena).</li>
+                <li><strong>Passos Diários:</strong> Tente atingir a meta de 8 a 10 mil passos por dia.</li>
+            </ul>
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Guia de Saúde e Bem-Estar - Transforme sua vida com equilíbrio.</p>
+</footer>
 
 </body>
 </html>
