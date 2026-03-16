@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Vida Saudável</title>
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --text-color: #34495e;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .signup-container {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .header-signup {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header-signup h1 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header-signup p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ee;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background: var(--secondary-color);
+        }
+
+        .footer-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+
+        .footer-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Estilo para medidas corporais */
+        .measurements {
+            background: #f9fbfd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px dashed #cbd5e0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+    <div class="header-signup">
+        <h1>Crie sua conta</h1>
+        <p>Preencha os dados abaixo para personalizar seu plano.</p>
+    </div>
+
+    <form>
+        <div class="form-group">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" placeholder="Ex: Maria Silva" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="seu@email.com" required>
+        </div>
+
+        <div class="measurements">
+            <label>Informações para Metas (Opcional)</label>
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;">
+                    <input type="number" id="peso" placeholder="Peso (kg)" step="0.1">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <input type="number" id="altura" placeholder="Altura (cm)">
+                </div>
+            </div>
+            <div class="form-group">
+                <select id="objetivo">
+                    <option value="" disabled selected>Seu principal objetivo</option>
+                    <option value="perda">Perder Peso</option>
+                    <option value="massa">Ganhar Massa Muscular</option>
+                    <option value="saude">Apenas ter uma Vida Saudável</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label for="confirmar">Confirmar</label>
+                <input type="password" id="confirmar" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Começar minha Transformação</button>
+    </form>
+
+    <div class="footer-link">
+        Já tem uma conta? <a href="#">Faça Login</a>
+    </div>
+</div>
+
+</body>
+</html>
