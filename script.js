@@ -39,3 +39,26 @@ localStorage.setItem('cadastro_cliente', JSON.stringify(cliente));
 // Lendo depois
 const salvo = JSON.parse(localStorage.getItem('cadastro_cliente'));
 console.log(salvo.nome); // "Ana Silva Santos"
+
+
+// 1. O Objeto original (como se estivesse vindo de um formulário)
+const cliente = {
+    id: 1025,
+    nome: "Ana Silva Santos",
+    email: "ana.silva@email.com",
+    ativo: true
+};
+
+// 2. Transformando o Objeto em uma STRING JSON (para enviar para um servidor)
+// O 'null, 2' serve para deixar o texto bonitinho/identado no console
+const clienteJSON = JSON.stringify(cliente, null, 2);
+
+console.log("Dados prontos para envio:");
+console.log(clienteJSON);
+
+// 3. O caminho inverso: Transformando uma STRING JSON em Objeto (quando você recebe dados)
+const dadosRecebidos = '{"id": 1025, "nome": "Ana Silva Santos", "ativo": true}';
+const objetoCliente = JSON.parse(dadosRecebidos);
+
+// Agora você acessa as propriedades normalmente
+console.log(`\nBem-vinda de volta, ${objetoCliente.nome}!`);
