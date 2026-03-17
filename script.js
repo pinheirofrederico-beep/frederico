@@ -1,64 +1,39 @@
-// Seleciona o formulário
-const form = document.getElementById('form-cadastro');
+// Alternar entre as telas de Login e Cadastro
+function toggleTelas() {
+    document.getElementById('cadastro-box').classList.toggle('hidden');
+    document.getElementById('login-box').classList.toggle('hidden');
+}
 
-// Evento de envio
-form.addEventListener('submit', function(event) {
-    event.preventDefault(); // Impede a página de recarregar
+// Função para Salvar Cadastro
+function cadastrar() {
+    const user = document.getElementById('reg-user').value;
+    const pass = document.getElementById('reg-pass').value;
 
-    // 1. Captura os valores dos campos
-    const novoUsuario = {
-        nome: document.getElementById('nome').value,
-        email: document.getElementById('email').value,
-        telefone: document.getElementById('telefone').value,
-        nascimento: document.getElementById('nascimento').value
-    };
+    if (user === '' || pass === '') {
+        alert("Preencha todos os campos!");
+        return;
+    }
 
-    // 2. Busca a lista de usuários já salvos ou cria uma vazia
-    const listaUsuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-    // 3. Adiciona o novo usuário à lista
-    listaUsuarios.push(novoUsuario);
-
-    // 4. Salva de volta no LocalStorage (convertendo para texto)
-    localStorage.setItem('usuarios', JSON.stringify(listaUsuarios));
-
-    // 5. Feedback e Limpeza
-    alert('Usuário cadastrado com sucesso!');
-    form.reset();
+    // Salva as informações como um objeto no LocalStorage
+    // Usamos o nome do usuário como 'chave' para permitir múltiplos usuários
+    localStorage.setItem(user, pass);
     
-    // Opcional: Mostra no console para você ver o "banco de dados"
-    console.log("Lista Atualizada:", listaUsuarios);
-{
-    
-});
+    alert("Cadastro realizado com sucesso!");
+    toggleTelas(); // Vai para a tela de login
+}
 
+// Função para Validar Login
+function login() {
+    const user = document.getElementById('log-user').value;
+    const pass = document.getElementById('log-pass').value;
 
-// Salvando
-localStorage.setItem('cadastro_cliente', JSON.stringify(cliente));
+    // Busca a senha associada ao usuário no LocalStorage
+    const senhaSalva = localStorage.getItem(user);
 
-// Lendo depois
-const salvo = JSON.parse(localStorage.getItem('cadastro_cliente'));
-console.log(salvo.nome); // "Ana Silva Santos"
-
-
-// 1. O Objeto original (como se estivesse vindo de um formulário)
-const cliente = {
-    id: 1025,
-    nome: "Ana Silva Santos",
-    email: "ana.silva@email.com",
-    ativo: true
-};
-
-// 2. Transformando o Objeto em uma STRING JSON (para enviar para um servidor)
-// O 'null, 2' serve para deixar o texto bonitinho/identado no console
-const clienteJSON = JSON.stringify(cliente, null, 2);
-
-console.log("Dados prontos para envio:");
-console.log(clienteJSON);
-
-// 3. O caminho inverso: Transformando uma STRING JSON em Objeto (quando você recebe dados)
-const dadosRecebidos = '{"id": 1025, "nome": "Ana Silva Santos", "ativo": true}';
-const objetoCliente = JSON.parse(dadosRecebidos);
-
-// Agora você acessa as propriedades normalmente
-console.log(`\nBem-vinda de volta, ${objetoCliente.nome}!`);
+    if (senhaSalva && senhaSalva === pass) {
+        alert("Login realizado! Redirecionando...");
+        window.location.href = "livros20.html"; // Redireciona para sua página
+    } else {
+        alert("Usuário ou senha incorretos.");
+    }
+}
