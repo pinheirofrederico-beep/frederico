@@ -63,184 +63,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - Vida Saudável</title>
+    <title>Sistema de Cadastro</title>
     <style>
         :root {
-            --primary-color: #2ecc71;
-            --secondary-color: #27ae60;
-            --text-color: #34495e;
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
+            --primary: #4f46e5;
+            --bg: #f3f4f6;
+            --text: #1f2937;
         }
 
         body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: 20px;
         }
 
-        .signup-container {
+        .container {
             background: white;
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-
-        .header-signup {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header-signup h1 {
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .header-signup p {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-color);
-            font-size: 0.9rem;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e8ee;
+            padding: 2rem;
             border-radius: 8px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            border-color: var(--primary-color);
-        }
-
-        .btn-submit {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             width: 100%;
-            background: var(--primary-color);
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        h2 { text-align: center; color: var(--primary); }
+
+        .form-group { margin-bottom: 1rem; }
+
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Garante que o padding não quebre o layout */
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 1rem;
             transition: background 0.3s;
-            margin-top: 10px;
         }
 
-        .btn-submit:hover {
-            background: var(--secondary-color);
-        }
+        button:hover { background-color: #4338ca; }
 
-        .footer-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #7f8c8d;
-        }
-
-        .footer-link a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Estilo para medidas corporais */
-        .measurements {
-            background: #f9fbfd;
-            padding: 15px;
+        /* Tabela de Dados */
+        .display-area {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            padding: 1rem;
             border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px dashed #cbd5e0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th { background-color: var(--primary); color: white; }
+
+        .id-badge {
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-<div class="signup-container">
-    <div class="header-signup">
-        <h1>Crie sua conta</h1>
-        <p>Preencha os dados abaixo para personalizar seu plano.</p>
-    </div>
-
-    <form>
-        <div class="form-group">
-            <label for="nome">Nome Completo</label>
-            <input type="text" id="nome" placeholder="Ex: Maria Silva" required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="seu@email.com" required>
-        </div>
-
-        <div class="measurements">
-            <label>Informações para Metas (Opcional)</label>
-            <div class="form-row">
-                <div class="form-group" style="flex: 1;">
-                    <input type="number" id="peso" placeholder="Peso (kg)" step="0.1">
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <input type="number" id="altura" placeholder="Altura (cm)">
-                </div>
+    <div class="container">
+        <h2>Cadastro de Cliente</h2>
+        <form id="cadastroForm">
+            <div class="form-group">
+                <label>Login (E-mail ou Usuário)</label>
+                <input type="text" id="login" required placeholder="Ex: joao_silva">
             </div>
             <div class="form-group">
-                <select id="objetivo">
-                    <option value="" disabled selected>Seu principal objetivo</option>
-                    <option value="perda">Perder Peso</option>
-                    <option value="massa">Ganhar Massa Muscular</option>
-                    <option value="saude">Apenas ter uma Vida Saudável</option>
-                </select>
+                <label>Senha</label>
+                <input type="password" id="senha" required placeholder="********">
             </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" required>
-            </div>
-            <div class="form-group" style="flex: 1;">
-                <label for="confirmar">Confirmar</label>
-                <input type="password" id="confirmar" required>
-            </div>
-        </div>
-
-        <button type="submit" class="btn-submit">Começar minha Transformação</button>
-    </form>
-
-    <div class="footer-link">
-        Já tem uma conta? <a href="#">Faça Login</a>
+            <button type="submit">Cadastrar Cliente</button>
+        </form>
     </div>
-</div>
 
+    <div class="display-area">
+        <h3>Usuários Cadastrados</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nº Usuário</th>
+                    <th>Login</th>
+                    <th>Senha (Hash Simulado)</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaCorpo">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        const form = document.getElementById('cadastroForm');
+        const tabela = document.getElementById('tabelaCorpo');
+
+        // Carregar dados ao iniciar
+        document.addEventListener('DOMContentLoaded', exibirUsuarios);
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const login = document.getElementById('login').value;
+            const senha = document.getElementById('senha').value;
+            
+            // Gera um número de usuário baseado no timestamp (único)
+            const numUsuario = Math.floor(Math.random() * 9000) + 1000;
+
+            const novoUsuario = { numUsuario, login, senha };
+
+            // Salvar no LocalStorage
+            let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            usuarios.push(novoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+            form.reset();
+            exibirUsuarios();
+        });
+
+        function exibirUsuarios() {
+            let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            tabela.innerHTML = '';
+
+            usuarios.forEach(user => {
+                const row = `
+                    <tr>
+                        <td><span class="id-badge">#${user.numUsuario}</span></td>
+                        <td>${user.login}</td>
+                        <td>********</td> 
+                    </tr>
+                `;
+                // Nota: Por segurança, nunca exibimos senhas reais em tabelas, 
+                // mas o dado está salvo no sistema.
+                tabela.innerHTML += row;
+            });
+        }
+    </script>
 </body>
 </html>
