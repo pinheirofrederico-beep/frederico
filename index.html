@@ -124,3 +124,147 @@
 
 </body>
 </html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Seguro - Livros20</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #0f172a;
+            --card: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .cadastro-box {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #334155;
+        }
+
+        h2 { text-align: center; margin-bottom: 1.5rem; color: #818cf8; }
+
+        .campo { margin-bottom: 1.2rem; }
+
+        label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: #94a3b8; }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--primary); }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        button:hover { background: #4f46e5; transform: translateY(-2px); }
+
+        .status {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cadastro-box">
+    <h2>Sistema de Cadastro</h2>
+    <form id="formCadastro">
+        <div class="campo">
+            <label>Login / Usuário</label>
+            <input type="text" id="usuario" required placeholder="Digite seu usuário">
+        </div>
+        <div class="campo">
+            <label>Senha</label>
+            <input type="password" id="senha" required placeholder="Crie uma senha">
+        </div>
+        <button type="submit">Cadastrar e Acessar Livros</button>
+    </form>
+    <div id="statusMsg" class="status"></div>
+</div>
+
+<script>
+    const form = document.getElementById('formCadastro');
+    const status = document.getElementById('statusMsg');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // 1. Pegar valores dos campos
+        const loginInput = document.getElementById('usuario').value;
+        const senhaInput = document.getElementById('senha').value;
+
+        // 2. Acessar o "Banco de Dados Local" (localStorage)
+        // Se não houver nada, cria uma lista vazia []
+        let db_usuarios = JSON.parse(localStorage.getItem('banco_usuarios')) || [];
+
+        // 3. Gerar Número de Usuário único (ID)
+        // Pega o ID do último usuário e soma +1, se não houver ninguém, começa com 1001
+        const proximoId = db_usuarios.length > 0 
+            ? db_usuarios[db_usuarios.length - 1].id + 1 
+            : 1001;
+
+        // 4. Criar o objeto com as informações
+        const novoUsuario = {
+            id: proximoId,
+            login: loginInput,
+            senha: senhaInput,
+            dataCadastro: new Date().toLocaleString()
+        };
+
+        // 5. Salvar na lista e guardar de volta no localStorage
+        db_usuarios.push(novoUsuario);
+        localStorage.setItem('banco_usuarios', JSON.stringify(db_usuarios));
+
+        // 6. Feedback visual e Redirecionamento
+        status.style.display = 'block';
+        status.style.color = '#4ade80';
+        status.innerText = `Sucesso! Usuário Nº ${proximoId} criado. Entrando...`;
+
+        setTimeout(() => {
+            window.location.href = "livros20.html";
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>
