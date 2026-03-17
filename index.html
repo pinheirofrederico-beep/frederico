@@ -124,3 +124,223 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Sistema de Livros</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --dark: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+            margin-bottom: 30px;
+        }
+
+        h2 { text-align: center; color: var(--dark); margin-bottom: 20px; }
+
+        .input-group { margin-bottom: 15px; }
+
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #64748b; }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:hover { background-color: #1d4ed8; }
+
+        /* Estilo da área de armazenamento visual */
+        .admin-section {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        th { color: #64748b; text-transform: uppercase; font-size: 0.75rem; }
+
+        .id-tag {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        #mensagem {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--success);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Criar Conta</h2>
+    <form id="registroForm">
+        <div class="input-group">
+            <label>Usuário ou E-mail</label>
+            <input type="text" id="user" required placeholder="Digite seu login">
+        </div>
+        <div class="input-group">
+            <label>Senha</label>
+            <input type="password" id="pass" required placeholder="Sua senha secreta">
+        </div>
+        <button type="submit" id="btnEntrar">Cadastrar e Entrar</button>
+    </form>
+    <p id="mensagem">Cadastro realizado! Redirecionando...</p>
+</div>
+
+<div class="admin-section">
+    <h3 style="margin-top:0; color: var(--dark);">Banco de Dados Local</h3>
+    <table id="tabelaDados">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Login</th>
+                <th>Senha</th>
+            </tr>
+        </thead>
+        <tbody id="corpoTabela">
+            </tbody>
+    </table>
+    <button onclick="limparTudo()" style="margin-top: 15px; background: #ef4444; font-size: 0.8rem; padding: 8px;">Limpar Banco Local</button>
+</div>
+
+<script>
+    const form = document.getElementById('registroForm');
+    const msg = document.getElementById('mensagem');
+    const btn = document.getElementById('btnEntrar');
+    const corpoTabela = document.getElementById('corpoTabela');
+
+    // Função para carregar a tabela sempre que abrir a página
+    function atualizarTabela() {
+        let lista = JSON.parse(localStorage.getItem('clientes')) || [];
+        corpoTabela.innerHTML = ""; // Limpa a tabela antes de carregar
+        
+        lista.forEach(cliente => {
+            const row = `<tr>
+                <td><span class="id-tag">#${cliente.id}</span></td>
+                <td>${cliente.login}</td>
+                <td>${cliente.senha}</td>
+            </tr>`;
+            corpoTabela.innerHTML += row;
+        });
+    }
+
+    // Carrega a tabela assim que o arquivo abre
+    atualizarTabela();
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const usuario = document.getElementById('user').value;
+        const senha = document.getElementById('pass').value;
+        const idUsuario = Math.floor(Math.random() * 5000) + 1;
+
+        const novoCliente = {
+            id: idUsuario,
+            login: usuario,
+            senha: senha
+        };
+
+        // Salva no LocalStorage
+        let lista = JSON.parse(localStorage.getItem('clientes')) || [];
+        lista.push(novoCliente);
+        localStorage.setItem('clientes', JSON.stringify(lista));
+
+        // Atualiza a tabela na tela imediatamente
+        atualizarTabela();
+
+        // Feedback visual
+        btn.innerText = "Processando...";
+        btn.style.opacity = "0.7";
+        msg.style.display = "block";
+
+        // Redireciona após 1.5 segundos
+        setTimeout(() => {
+            window.location.href = "livros20.html";
+        }, 1500);
+    });
+
+    // Função extra para você limpar os testes
+    function limparTudo() {
+        if(confirm("Deseja apagar todos os cadastros locais?")) {
+            localStorage.removeItem('clientes');
+            atualizarTabela();
+        }
+    }
+</script>
+
+</body>
+</html>
