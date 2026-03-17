@@ -2,233 +2,125 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Cliente</title>
-    <style>
-        body { font-family: sans-serif; max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-        div { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { background-color: #28a745; color: white; border: none; padding: 10px 15px; cursor: pointer; width: 100%; border-radius: 4px; }
-        button:hover { background-color: #218838; }
-    </style>
-</head>
-<body>
-
-    <h2>Cadastro de Cliente</h2>
-    
-    <form id="formCadastro">
-        <div>
-            <label for="nome">Nome Completo:</label>
-            <input type="text" id="nome" required>
-        </div>
-        <div>
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" required>
-        </div>
-        <button type="submit">Finalizar Cadastro</button>
-    </form>
-
-    <script>
-        document.getElementById('formCadastro').addEventListener('submit', function(event) {
-            // 1. Evita que a página recarregue antes de processarmos os dados
-            event.preventDefault();
-
-            // 2. Captura os valores dos campos
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-
-            // 3. Monta o objeto (que viraria o nosso JSON)
-            const dadosCliente = {
-                nome: nome,
-                email: email,
-                data_cadastro: new Date().toISOString()
-            };
-
-            // Simulação: Salvando no console e no localStorage
-            console.log("Dados capturados:", JSON.stringify(dadosCliente));
-            localStorage.setItem('clienteLogado', JSON.stringify(dadosCliente));
-
-            // 4. O REDIRECIONAMENTO:
-            // Isso leva o usuário para a nova página
-            window.location.href = "livros20.html";
-        });
-    </script>
-
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Cadastro</title>
+    <title>Cadastro - Sistema de Livros</title>
     <style>
         :root {
-            --primary: #4f46e5;
-            --bg: #f3f4f6;
-            --text: #1f2937;
+            --primary: #2563eb;
+            --success: #16a34a;
+            --bg: #f8fafc;
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg);
-            color: var(--text);
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 20px;
+            height: 100vh;
+            margin: 0;
         }
 
-        .container {
+        .card {
             background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 2rem;
+            max-width: 350px;
         }
 
-        h2 { text-align: center; color: var(--primary); }
+        h2 { text-align: center; color: #1e293b; margin-bottom: 20px; }
 
-        .form-group { margin-bottom: 1rem; }
+        .input-group { margin-bottom: 15px; }
 
-        label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #64748b; }
 
         input {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box; /* Garante que o padding não quebre o layout */
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
         }
 
         button {
             width: 100%;
-            padding: 0.75rem;
+            padding: 12px;
             background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-
-        button:hover { background-color: #4338ca; }
-
-        /* Tabela de Dados */
-        .display-area {
-            width: 100%;
-            max-width: 800px;
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-
-        th { background-color: var(--primary); color: white; }
-
-        .id-badge {
-            background: #e0e7ff;
-            color: var(--primary);
-            padding: 2px 8px;
-            border-radius: 12px;
             font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:hover { background-color: #1d4ed8; }
+
+        #mensagem {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--success);
             font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Cadastro de Cliente</h2>
-        <form id="cadastroForm">
-            <div class="form-group">
-                <label>Login (E-mail ou Usuário)</label>
-                <input type="text" id="login" required placeholder="Ex: joao_silva">
-            </div>
-            <div class="form-group">
-                <label>Senha</label>
-                <input type="password" id="senha" required placeholder="********">
-            </div>
-            <button type="submit">Cadastrar Cliente</button>
-        </form>
-    </div>
+<div class="card">
+    <h2>Criar Conta</h2>
+    <form id="registroForm">
+        <div class="input-group">
+            <label>Usuário ou E-mail</label>
+            <input type="text" id="user" required placeholder="Digite seu login">
+        </div>
+        <div class="input-group">
+            <label>Senha</label>
+            <input type="password" id="pass" required placeholder="Sua senha secreta">
+        </div>
+        <button type="submit" id="btnEntrar">Cadastrar e Entrar</button>
+    </form>
+    <p id="mensagem">Cadastro realizado! Redirecionando...</p>
+</div>
 
-    <div class="display-area">
-        <h3>Usuários Cadastrados</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nº Usuário</th>
-                    <th>Login</th>
-                    <th>Senha (Hash Simulado)</th>
-                </tr>
-            </thead>
-            <tbody id="tabelaCorpo">
-                </tbody>
-        </table>
-    </div>
+<script>
+    const form = document.getElementById('registroForm');
+    const msg = document.getElementById('mensagem');
+    const btn = document.getElementById('btnEntrar');
 
-    <script>
-        const form = document.getElementById('cadastroForm');
-        const tabela = document.getElementById('tabelaCorpo');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Impede o recarregamento imediato
 
-        // Carregar dados ao iniciar
-        document.addEventListener('DOMContentLoaded', exibirUsuarios);
+        // Captura os dados
+        const usuario = document.getElementById('user').value;
+        const senha = document.getElementById('pass').value;
+        const idUsuario = Math.floor(Math.random() * 5000) + 1; // Gera ID aleatório
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+        // Cria o objeto do cliente
+        const novoCliente = {
+            id: idUsuario,
+            login: usuario,
+            senha: senha
+        };
 
-            const login = document.getElementById('login').value;
-            const senha = document.getElementById('senha').value;
-            
-            // Gera um número de usuário baseado no timestamp (único)
-            const numUsuario = Math.floor(Math.random() * 9000) + 1000;
+        // Salva no LocalStorage (memória do navegador)
+        let lista = JSON.parse(localStorage.getItem('clientes')) || [];
+        lista.push(novoCliente);
+        localStorage.setItem('clientes', JSON.stringify(lista));
 
-            const novoUsuario = { numUsuario, login, senha };
+        // Feedback visual
+        btn.innerText = "Processando...";
+        btn.style.opacity = "0.7";
+        msg.style.display = "block";
 
-            // Salvar no LocalStorage
-            let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-            usuarios.push(novoUsuario);
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        // Redireciona após 1.5 segundos
+        setTimeout(() => {
+            window.location.href = "livros20.html";
+        }, 1500);
+    });
+</script>
 
-            form.reset();
-            exibirUsuarios();
-        });
-
-        function exibirUsuarios() {
-            let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-            tabela.innerHTML = '';
-
-            usuarios.forEach(user => {
-                const row = `
-                    <tr>
-                        <td><span class="id-badge">#${user.numUsuario}</span></td>
-                        <td>${user.login}</td>
-                        <td>********</td> 
-                    </tr>
-                `;
-                // Nota: Por segurança, nunca exibimos senhas reais em tabelas, 
-                // mas o dado está salvo no sistema.
-                tabela.innerHTML += row;
-            });
-        }
-    </script>
 </body>
 </html>
