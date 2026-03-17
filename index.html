@@ -129,218 +129,182 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - Sistema de Livros</title>
+    <title>Gerenciador de Clientes PRO</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --success: #16a34a;
-            --bg: #f8fafc;
-            --dark: #1e293b;
+            --primary: #4f46e5;
+            --danger: #ef4444;
+            --success: #10b981;
+            --bg: #f1f5f9;
+            --text: #1e293b;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            margin: 0;
-        }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        
+        .container { max-width: 900px; margin: 0 auto; }
 
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 350px;
-            margin-bottom: 30px;
-        }
+        /* Formulário */
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .grid-form { display: grid; grid-template-columns: 1fr 1fr 120px 150px; gap: 10px; }
+        
+        input, select { padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; width: 100%; box-sizing: border-box; }
+        
+        button { cursor: pointer; border: none; border-radius: 4px; font-weight: bold; transition: 0.3s; }
+        .btn-add { background: var(--primary); color: white; }
+        .btn-save { background: var(--success); color: white; display: none; }
+        
+        /* Tabela */
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f8fafc; color: #64748b; font-size: 0.8rem; text-transform: uppercase; }
 
-        h2 { text-align: center; color: var(--dark); margin-bottom: 20px; }
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+        .badge-admin { background: #fee2e2; color: #b91c1c; }
+        .badge-user { background: #dcfce7; color: #15803d; }
 
-        .input-group { margin-bottom: 15px; }
+        .actions button { padding: 5px 10px; margin-right: 5px; font-size: 0.8rem; }
+        .edit-btn { background: #fbbf24; color: black; }
+        .delete-btn { background: var(--danger); color: white; }
 
-        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #64748b; }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        button:hover { background-color: #1d4ed8; }
-
-        /* Estilo da área de armazenamento visual */
-        .admin-section {
-            width: 100%;
-            max-width: 600px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 0.85rem;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        th { color: #64748b; text-transform: uppercase; font-size: 0.75rem; }
-
-        .id-tag {
-            background: #e2e8f0;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        #mensagem {
-            display: none;
-            text-align: center;
-            margin-top: 15px;
-            color: var(--success);
-            font-size: 0.85rem;
-        }
+        .links { margin-top: 20px; text-align: center; }
+        a { color: var(--primary); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Criar Conta</h2>
-    <form id="registroForm">
-        <div class="input-group">
-            <label>Usuário ou E-mail</label>
-            <input type="text" id="user" required placeholder="Digite seu login">
-        </div>
-        <div class="input-group">
-            <label>Senha</label>
-            <input type="password" id="pass" required placeholder="Sua senha secreta">
-        </div>
-        <button type="submit" id="btnEntrar">Cadastrar e Entrar</button>
-    </form>
-    <p id="mensagem">Cadastro realizado! Redirecionando...</p>
-</div>
+<div class="container">
+    <h2>Painel de Controle de Usuários</h2>
 
-<div class="admin-section">
-    <h3 style="margin-top:0; color: var(--dark);">Banco de Dados Local</h3>
-    <table id="tabelaDados">
+    <div class="card">
+        <h3 id="formTitle">Novo Cadastro</h3>
+        <div class="grid-form">
+            <input type="hidden" id="editIndex">
+            <input type="text" id="userName" placeholder="Nome/Login" required>
+            <input type="password" id="userPass" placeholder="Senha" required>
+            <select id="userRole">
+                <option value="Usuário">Usuário</option>
+                <option value="Admin">Admin</option>
+            </select>
+            <button onclick="salvarUsuario()" id="btnAdd" class="btn-add">Adicionar</button>
+            <button onclick="confirmarEdicao()" id="btnSave" class="btn-save">Salvar Alteração</button>
+        </div>
+    </div>
+
+    <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Login</th>
-                <th>Senha</th>
+                <th>Nome / Login</th>
+                <th>Nível</th>
+                <th>Ações</th>
             </tr>
         </thead>
-        <tbody id="corpoTabela">
+        <tbody id="listaUsuarios">
             </tbody>
     </table>
-    <button onclick="limparTudo()" style="margin-top: 15px; background: #ef4444; font-size: 0.8rem; padding: 8px;">Limpar Banco Local</button>
+
+    <div class="links">
+        <a href="livroteste.html">Ir para Livro Teste →</a>
+    </div>
 </div>
 
 <script>
-    const form = document.getElementById('registroForm');
-    const msg = document.getElementById('mensagem');
-    const btn = document.getElementById('btnEntrar');
-    const corpoTabela = document.getElementById('corpoTabela');
+    let usuarios = JSON.parse(localStorage.getItem('usuarios_db')) || [];
 
-    // Função para carregar a tabela sempre que abrir a página
-    function atualizarTabela() {
-        let lista = JSON.parse(localStorage.getItem('clientes')) || [];
-        corpoTabela.innerHTML = ""; // Limpa a tabela antes de carregar
-        
-        lista.forEach(cliente => {
-            const row = `<tr>
-                <td><span class="id-tag">#${cliente.id}</span></td>
-                <td>${cliente.login}</td>
-                <td>${cliente.senha}</td>
-            </tr>`;
-            corpoTabela.innerHTML += row;
+    function renderizarTabela() {
+        const tbody = document.getElementById('listaUsuarios');
+        tbody.innerHTML = '';
+
+        usuarios.forEach((user, index) => {
+            const badgeClass = user.role === 'Admin' ? 'badge-admin' : 'badge-user';
+            tbody.innerHTML += `
+                <tr>
+                    <td>#${user.id}</td>
+                    <td><strong>${user.nome}</strong></td>
+                    <td><span class="badge ${badgeClass}">${user.role}</span></td>
+                    <td class="actions">
+                        <button class="edit-btn" onclick="prepararEdicao(${index})">Editar</button>
+                        <button class="delete-btn" onclick="excluirUsuario(${index})">Excluir</button>
+                    </td>
+                </tr>
+            `;
         });
+        localStorage.setItem('usuarios_db', JSON.stringify(usuarios));
     }
 
-    // Carrega a tabela assim que o arquivo abre
-    atualizarTabela();
+    function salvarUsuario() {
+        const nome = document.getElementById('userName').value;
+        const senha = document.getElementById('userPass').value;
+        const role = document.getElementById('userRole').value;
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+        if(!nome || !senha) return alert("Preencha todos os campos!");
 
-        const usuario = document.getElementById('user').value;
-        const senha = document.getElementById('pass').value;
-        const idUsuario = Math.floor(Math.random() * 5000) + 1;
-
-        const novoCliente = {
-            id: idUsuario,
-            login: usuario,
-            senha: senha
+        const novo = {
+            id: Math.floor(Math.random() * 9000) + 1000,
+            nome, senha, role
         };
 
-        // Salva no LocalStorage
-        let lista = JSON.parse(localStorage.getItem('clientes')) || [];
-        lista.push(novoCliente);
-        localStorage.setItem('clientes', JSON.stringify(lista));
+        usuarios.push(novo);
+        limparCampos();
+        renderizarTabela();
+    }
 
-        // Atualiza a tabela na tela imediatamente
-        atualizarTabela();
-
-        // Feedback visual
-        btn.innerText = "Processando...";
-        btn.style.opacity = "0.7";
-        msg.style.display = "block";
-
-        // Redireciona após 1.5 segundos
-        setTimeout(() => {
-            window.location.href = "livros20.html";
-        }, 1500);
-    });
-
-    // Função extra para você limpar os testes
-    function limparTudo() {
-        if(confirm("Deseja apagar todos os cadastros locais?")) {
-            localStorage.removeItem('clientes');
-            atualizarTabela();
+    function excluirUsuario(index) {
+        if(confirm("Tem certeza que deseja excluir este usuário?")) {
+            usuarios.splice(index, 1);
+            renderizarTabela();
         }
     }
+
+    function prepararEdicao(index) {
+        const user = usuarios[index];
+        document.getElementById('userName').value = user.nome;
+        document.getElementById('userPass').value = user.senha;
+        document.getElementById('userRole').value = user.role;
+        document.getElementById('editIndex').value = index;
+
+        document.getElementById('formTitle').innerText = "Editando Usuário";
+        document.getElementById('btnAdd').style.display = "none";
+        document.getElementById('btnSave').style.display = "block";
+    }
+
+    function confirmarEdicao() {
+        const index = document.getElementById('editIndex').value;
+        usuarios[index].nome = document.getElementById('userName').value;
+        usuarios[index].senha = document.getElementById('userPass').value;
+        usuarios[index].role = document.getElementById('userRole').value;
+
+        document.getElementById('formTitle').innerText = "Novo Cadastro";
+        document.getElementById('btnAdd').style.display = "block";
+        document.getElementById('btnSave').style.display = "none";
+        
+        limparCampos();
+        renderizarTabela();
+    }
+
+    function limparCampos() {
+        document.getElementById('userName').value = '';
+        document.getElementById('userPass').value = '';
+    }
+
+    // Inicializa a tabela ao carregar
+    renderizarTabela();
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
