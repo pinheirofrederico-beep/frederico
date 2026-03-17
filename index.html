@@ -301,7 +301,6 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -418,13 +417,22 @@
             font-weight: bold;
         }
 
-        /* Estilo para medidas corporais */
         .measurements {
             background: #f9fbfd;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
             border: 1px dashed #cbd5e0;
+        }
+
+        /* Mensagem de sucesso antes de redirecionar */
+        #msg-sucesso {
+            display: none;
+            text-align: center;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -436,7 +444,7 @@
         <p>Preencha os dados abaixo para personalizar seu plano.</p>
     </div>
 
-    <form>
+    <form id="formVidaSaudavel">
         <div class="form-group">
             <label for="nome">Nome Completo</label>
             <input type="text" id="nome" placeholder="Ex: Maria Silva" required>
@@ -478,7 +486,8 @@
             </div>
         </div>
 
-        <button type="submit" class="btn-submit">Começar minha Transformação</button>
+        <button type="submit" class="btn-submit" id="btnAcao">Começar minha Transformação</button>
+        <p id="msg-sucesso">Cadastro realizado! Preparando seu ambiente...</p>
     </form>
 
     <div class="footer-link">
@@ -486,11 +495,51 @@
     </div>
 </div>
 
+<script>
+    const form = document.getElementById('formVidaSaudavel');
+    const btn = document.getElementById('btnAcao');
+    const msg = document.getElementById('msg-sucesso');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Impede o envio padrão do formulário
+
+        // Validação básica de senha
+        const senha = document.getElementById('senha').value;
+        const confirmar = document.getElementById('confirmar').value;
+
+        if (senha !== confirmar) {
+            alert("As senhas não coincidem!");
+            return;
+        }
+
+        // Coleta de dados
+        const usuario = {
+            id: Math.floor(Math.random() * 10000), // Gera um número de usuário
+            nome: document.getElementById('nome').value,
+            email: document.getElementById('email').value,
+            peso: document.getElementById('peso').value,
+            altura: document.getElementById('altura').value,
+            objetivo: document.getElementById('objetivo').value,
+            senha: senha // Em sistemas reais, a senha seria criptografada
+        };
+
+        // Salva no "Banco Local" (LocalStorage)
+        let listaClientes = JSON.parse(localStorage.getItem('clientes_vida_saudavel')) || [];
+        listaClientes.push(usuario);
+        localStorage.setItem('clientes_vida_saudavel', JSON.stringify(listaClientes));
+
+        // Feedback visual
+        btn.disabled = true;
+        btn.innerText = "Cadastrando...";
+        btn.style.opacity = "0.7";
+        msg.style.display = "block";
+
+        // Redirecionamento após 2 segundos
+        setTimeout(() => {
+            window.location.href = "livros20.html";
+        }, 2000);
+    });
+</script>
+
 </body>
 </html>
-
-
-
-
-
-
