@@ -3,184 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - Vida Saudável</title>
+    <title>Portal Vida Equilibrada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2ecc71;
-            --secondary-color: #27ae60;
-            --text-color: #34495e;
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --primary-green: #2d6a4f;
+            --light-green: #d8f3dc;
+            --accent-orange: #ff9f1c;
+            --text-dark: #1b4332;
+            --bg-light: #f8fdf9;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', sans-serif;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
-        .signup-container {
+        /* Header */
+        header {
             background: white;
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-
-        .header-signup {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header-signup h1 {
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .header-signup p {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-row {
+            padding: 1rem 5%;
             display: flex;
-            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-color);
-            font-size: 0.9rem;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e8ee;
-            border-radius: 8px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            border-color: var(--primary-color);
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 1rem;
+        .logo {
+            font-size: 1.5rem;
             font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
+            color: var(--primary-green);
         }
 
-        .btn-submit:hover {
-            background: var(--secondary-color);
-        }
-
-        .footer-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #7f8c8d;
-        }
-
-        .footer-link a {
-            color: var(--primary-color);
+        nav a {
             text-decoration: none;
-            font-weight: bold;
+            color: var(--text-dark);
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
         }
 
-        /* Estilo para medidas corporais */
-        .measurements {
-            background: #f9fbfd;
-            padding: 15px;
-            border-radius: 8px;
+        nav a:hover {
+            color: var(--accent-orange);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 5%;
+            text-align: center;
+            background: linear-gradient(rgba(45, 106, 79, 0.05), rgba(45, 106, 79, 0.05));
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Grid de Conteúdo */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border-bottom: 5px solid var(--primary-green);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--accent-orange);
             margin-bottom: 20px;
-            border: 1px dashed #cbd5e0;
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            color: var(--primary-green);
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1b4332;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            header { flex-direction: column; gap: 10px; }
+            nav a { margin: 0 10px; }
         }
     </style>
 </head>
 <body>
 
-<div class="signup-container">
-    <div class="header-signup">
-        <h1>Crie sua conta</h1>
-        <p>Preencha os dados abaixo para personalizar seu plano.</p>
-    </div>
+    <header>
+        <div class="logo"><i class="fas fa-heart-pulse"></i> NutriVida</div>
+        <nav>
+            <a href="#dietas">Dietas</a>
+            <a href="#metodos">Hábitos</a>
+            <a href="#nutricao">Nutrição</a>
+        </nav>
+    </header>
 
-    <form>
-        <div class="form-group">
-            <label for="nome">Nome Completo</label>
-            <input type="text" id="nome" placeholder="Ex: Maria Silva" required>
+    <section class="hero">
+        <h1>Sua jornada para uma vida melhor</h1>
+        <p>Explore guias completos sobre alimentação consciente e bem-estar físico.</p>
+    </section>
+
+    <main class="container">
+        <div class="card" id="dietas">
+            <i class="fas fa-utensils"></i>
+            <h2>Dietas e Planos</h2>
+            <p>Conheça as abordagens nutricionais mais comuns: Mediterrânea, Low Carb, Flexitariana e muito mais.</p>
+            <a href="#" class="btn">Explorar Dietas</a>
         </div>
 
-        <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="seu@email.com" required>
+        <div class="card" id="metodos">
+            <i class="fas fa-person-running"></i>
+            <h2>Métodos de Vida</h2>
+            <p>Dicas sobre higiene do sono, prática de exercícios, hidratação e como manter a constância nos hábitos.</p>
+            <a href="#" class="btn">Ver Métodos</a>
         </div>
 
-        <div class="measurements">
-            <label>Informações para Metas (Opcional)</label>
-            <div class="form-row">
-                <div class="form-group" style="flex: 1;">
-                    <input type="number" id="peso" placeholder="Peso (kg)" step="0.1">
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <input type="number" id="altura" placeholder="Altura (cm)">
-                </div>
-            </div>
-            <div class="form-group">
-                <select id="objetivo">
-                    <option value="" disabled selected>Seu principal objetivo</option>
-                    <option value="perda">Perder Peso</option>
-                    <option value="massa">Ganhar Massa Muscular</option>
-                    <option value="saude">Apenas ter uma Vida Saudável</option>
-                </select>
-            </div>
+        <div class="card" id="nutricao">
+            <i class="fas fa-apple-whole"></i>
+            <h2>Alimentação Direta</h2>
+            <p>Aprenda a ler rótulos, entender os macronutrientes e a importância de evitar alimentos ultraprocessados.</p>
+            <a href="#" class="btn">Dicas de Nutrição</a>
         </div>
+    </main>
 
-        <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" required>
-            </div>
-            <div class="form-group" style="flex: 1;">
-                <label for="confirmar">Confirmar</label>
-                <input type="password" id="confirmar" required>
-            </div>
-        </div>
-
-        <button type="submit" class="btn-submit">Começar minha Transformação</button>
-    </form>
-
-    <div class="footer-link">
-        Já tem uma conta? <a href="#">Faça Login</a>
-    </div>
-</div>
+    <footer>
+        <p>&copy; 2024 Portal NutriVida. <br> 
+        <small>Lembre-se: Sempre consulte um nutricionista antes de iniciar qualquer dieta restritiva.</small></p>
+    </footer>
 
 </body>
 </html>
