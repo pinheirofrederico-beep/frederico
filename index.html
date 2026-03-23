@@ -225,4 +225,69 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Depósito de Dados</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h2 { color: #333; }
+        textarea { width: 100%; height: 100px; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: none; }
+        button { background-color: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #218838; }
+        .data-display { margin-top: 20px; padding: 10px; background: #e9ecef; border-radius: 4px; min-height: 50px; white-space: pre-wrap; }
+        .logout { background-color: #dc3545; margin-top: 10px; }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <h2>📂 Meus Dados Salvos</h2>
+    <p>O que você digitar aqui ficará salvo mesmo se fechar o navegador.</p>
+    
+    <textarea id="userInput" placeholder="Digite aqui suas informações confidenciais..."></textarea>
+    <br>
+    <button onclick="saveData()">Salvar Dados</button>
+    <button class="logout" onclick="clearData()">Limpar Tudo</button>
+
+    <h3>Conteúdo Atual:</h3>
+    <div id="displayArea" class="data-display">Nenhum dado salvo.</div>
+</div>
+
+<script>
+    // Referências aos elementos
+    const inputField = document.getElementById('userInput');
+    const displayArea = document.getElementById('displayArea');
+
+    // Função para carregar dados ao abrir a página
+    window.onload = () => {
+        const savedData = localStorage.getItem('user_secure_data');
+        if (savedData) {
+            displayArea.innerText = savedData;
+            inputField.value = savedData;
+        }
+    };
+
+    // Função para salvar os dados
+    function saveData() {
+        const data = inputField.value;
+        localStorage.setItem('user_secure_data', data);
+        displayArea.innerText = data;
+        alert("Dados salvos com sucesso!");
+    }
+
+    // Função para limpar (Logout simulado)
+    function clearData() {
+        if(confirm("Tem certeza que deseja apagar tudo?")) {
+            localStorage.removeItem('user_secure_data');
+            inputField.value = "";
+            displayArea.innerText = "Nenhum dado salvo.";
+        }
+    }
+</script>
+
+</body>
+</html>
