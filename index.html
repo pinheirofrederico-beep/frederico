@@ -225,68 +225,139 @@
 </body>
 </html>
 
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Depósito de Dados</title>
+    <title>Painel de Controle - Usuários</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; padding: 20px; }
-        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h2 { color: #333; }
-        textarea { width: 100%; height: 100px; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: none; }
-        button { background-color: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        button:hover { background-color: #218838; }
-        .data-display { margin-top: 20px; padding: 10px; background: #e9ecef; border-radius: 4px; min-height: 50px; white-space: pre-wrap; }
-        .logout { background-color: #dc3545; margin-top: 10px; }
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 { color: var(--text); border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #64748b;
+            text-align: left;
+            padding: 12px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+
+        tr:hover { background-color: #f8fafc; }
+
+        .badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .btn-voltar {
+            margin-top: 20px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>📂 Meus Dados Salvos</h2>
-    <p>O que você digitar aqui ficará salvo mesmo se fechar o navegador.</p>
+    <h2>👥 Usuários Cadastrados</h2>
     
-    <textarea id="userInput" placeholder="Digite aqui suas informações confidenciais..."></textarea>
-    <br>
-    <button onclick="saveData()">Salvar Dados</button>
-    <button class="logout" onclick="clearData()">Limpar Tudo</button>
+    <table id="tabelaUsuarios">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Login / E-mail</th>
+                <th>Senha (Hash Simulado)</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="corpoTabela">
+            </tbody>
+    </table>
 
-    <h3>Conteúdo Atual:</h3>
-    <div id="displayArea" class="data-display">Nenhum dado salvo.</div>
+    <a href="index.html" class="btn-voltar">← Voltar para o Cadastro</a>
 </div>
 
 <script>
-    // Referências aos elementos
-    const inputField = document.getElementById('userInput');
-    const displayArea = document.getElementById('displayArea');
+    function carregarUsuarios() {
+        const corpoTabela = document.getElementById('corpoTabela');
+        // Busca a lista no LocalStorage
+        const lista = JSON.parse(localStorage.getItem('clientes')) || [];
 
-    // Função para carregar dados ao abrir a página
-    window.onload = () => {
-        const savedData = localStorage.getItem('user_secure_data');
-        if (savedData) {
-            displayArea.innerText = savedData;
-            inputField.value = savedData;
+        if (lista.length === 0) {
+            corpoTabela.innerHTML = `<tr><td colspan="4" style="text-align:center">Nenhum usuário cadastrado ainda.</td></tr>`;
+            return;
         }
-    };
 
-    // Função para salvar os dados
-    function saveData() {
-        const data = inputField.value;
-        localStorage.setItem('user_secure_data', data);
-        displayArea.innerText = data;
-        alert("Dados salvos com sucesso!");
+        // Limpa a tabela antes de renderizar
+        corpoTabela.innerHTML = "";
+
+        // Preenche a tabela com cada usuário da lista
+        lista.forEach(cliente => {
+            const linha = `
+                <tr>
+                    <td>#${cliente.id}</td>
+                    <td><strong>${cliente.login}</strong></td>
+                    <td><code>${cliente.senha.replace(/./g, '*')}</code> (Protegida)</td>
+                    <td><span class="badge">Ativo</span></td>
+                </tr>
+            `;
+            corpoTabela.innerHTML += linha;
+        });
     }
 
-    // Função para limpar (Logout simulado)
-    function clearData() {
-        if(confirm("Tem certeza que deseja apagar tudo?")) {
-            localStorage.removeItem('user_secure_data');
-            inputField.value = "";
-            displayArea.innerText = "Nenhum dado salvo.";
-        }
-    }
+    // Executa a função ao carregar a página
+    window.onload = carregarUsuarios;
 </script>
 
 </body>
